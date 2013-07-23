@@ -3,6 +3,7 @@ package com.crystalcraftmc.witherbow;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -51,8 +52,11 @@ public class BowListener implements Listener, CommandExecutor
 			    		sender.sendMessage("This command can only be run by a player.");
 			    	}
 	    			
-	    			// ...but if they are a player, add them to the enabledPlayers list!
+	    			// ...but if they are a player, add them to the enabledPlayers list...
 	    			enabledPlayers.add(p.getName());
+	    			
+	    			// ...and tell the player that they can now shoot wither skulls!
+	    			p.sendMessage(ChatColor.GREEN + "Your bow has evolved into a WitherBow!");
 	    		}
 	    	}
 	    	
@@ -69,8 +73,11 @@ public class BowListener implements Listener, CommandExecutor
 	    				sender.sendMessage("This command can only be run by a player.");
 	    			}
 	    			
-	    			// ...but if they are a player, remove them to the enabledPlayers list!
+	    			// ...but if they are a player, remove them to the enabledPlayers list...
 	    			enabledPlayers.remove(p.getName());
+	    			
+	    			// ...and tell them they are back to normal.
+	    			p.sendMessage(ChatColor.RED + "Your bow has returned to its normal state.");
 	    		}
 	    	}
 	    		
@@ -98,7 +105,7 @@ public class BowListener implements Listener, CommandExecutor
 			
 			if(p.hasPermission("witherbow.fire"))
 			{
-				enabledPlayers.add(p.getName());
+				if(enabledPlayers.contains(p.getName()));
 				{
 					e.setCancelled(true);
 					p.launchProjectile(WitherSkull.class).setVelocity(e.getProjectile().getVelocity().multiply(0.5));

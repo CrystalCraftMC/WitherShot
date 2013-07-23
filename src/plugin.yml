@@ -4,6 +4,13 @@ author: jflory7
 main: com.crystalcraftmc.witherbow.Main
 version: 0.1b
 
+commands:
+    witherbow:
+        description: Allows/disallows a player to shoot wither skulls.
+        usage: /witherbow <enable, disable>
+        permission: witherbow.fire
+        permission-message: You do not have permission to use <permission>
+
 permissions:
     witherbow.fire:
         description: Allow a player to shoot wither skulls.
