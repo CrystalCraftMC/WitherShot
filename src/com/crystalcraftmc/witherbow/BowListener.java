@@ -97,7 +97,7 @@ public class BowListener implements Listener, CommandExecutor
 	    	// ...do not let the command be run.
     		p.sendMessage("You do not have permission to use that command.");
 		}
-
+		
 		// If this hasn't happened, a value of false will be returned.
     	return false;
 	}
