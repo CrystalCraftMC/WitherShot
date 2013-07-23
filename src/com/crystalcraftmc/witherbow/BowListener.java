@@ -109,13 +109,10 @@ public class BowListener implements Listener, CommandExecutor
 		{
 			Player p = (Player) e.getEntity();
 			
-			if(p.hasPermission("witherbow.fire"))
+			if(enabledPlayers.contains(p.getName()));
 			{
-				if(enabledPlayers.contains(p.getName()));
-				{
-					e.setCancelled(true);
-					p.launchProjectile(WitherSkull.class).setVelocity(e.getProjectile().getVelocity().multiply(0.5));
-				}
+				e.setCancelled(true);
+				p.launchProjectile(WitherSkull.class).setVelocity(e.getProjectile().getVelocity().multiply(0.4));
 			}
 		}
 	}
