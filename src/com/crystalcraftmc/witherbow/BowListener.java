@@ -36,7 +36,7 @@ public class BowListener implements Listener, CommandExecutor
 	    	if(args.length != 1)
 		    {
 		        // ...return the command as incomplete.
-		        return false;
+		        return true;
 		    }
 	    	
 	    	// ...but if the player types "/witherbow enable"...
@@ -57,9 +57,6 @@ public class BowListener implements Listener, CommandExecutor
 	    			
 	    			// ...and tell the player that they can now shoot wither skulls!
 	    			p.sendMessage(ChatColor.GREEN + "Your bow has evolved into a WitherBow!");
-	    			
-	    			// If this has happened, the function will return true. 
-	    	    	return true;
 	    		}
 	    	}
 	    	
@@ -81,14 +78,8 @@ public class BowListener implements Listener, CommandExecutor
 	    			
 	    			// ...and tell them they are back to normal.
 	    			p.sendMessage(ChatColor.RED + "Your bow has returned to its normal state.");
-	    			
-	    			// If this has happened, the function will return true. 
-	    	    	return true;
 	    		}
 	    	}
-	    		
-	    	// If this has happened, the function will return true. 
-	    	return true;
 	    }
 	    	
 	    // Otherwise, if the sender of the command doesn't have the permission...
@@ -98,8 +89,8 @@ public class BowListener implements Listener, CommandExecutor
     		p.sendMessage("You do not have permission to use that command.");
 		}
 		
-		// If this hasn't happened, a value of false will be returned.
-    	return false;
+		// If this has happened, the function will return true. 
+    	return true;
 	}
 	
 	@EventHandler
