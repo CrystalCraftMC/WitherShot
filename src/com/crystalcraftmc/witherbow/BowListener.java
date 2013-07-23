@@ -42,16 +42,16 @@ public class BowListener implements Listener, CommandExecutor
 	    	// ...but if the player types "/witherbow enable"...
 	    	else if(args[0].equalsIgnoreCase("enable"))
 	    	{
+	    		// ...but they are not a player in-game...
+	    		if (!(sender instanceof Player))
+		    	{
+	   				// ...do not let the command be run.
+		    		sender.sendMessage("This command can only be run by a player.");
+		    	}
+	    		
 	    		// ...and if they have the following permission...
 	    		if(p.hasPermission("witherbow.fire"))
-	    		{
-	    			// ...but they are not a player in-game...
-	    			if (!(sender instanceof Player))
-			    	{
-	    				// ...do not let the command be run.
-			    		sender.sendMessage("This command can only be run by a player.");
-			    	}
-	    			
+	    		{	    			
 	    			// ...but if they are a player, add them to the enabledPlayers list...
 	    			enabledPlayers.add(p.getName());
 	    			
@@ -66,17 +66,17 @@ public class BowListener implements Listener, CommandExecutor
 	    	// If the player types "/witherbow disable"...
 	    	else if(args[0].equalsIgnoreCase("disable"))
 	    	{
+	    		// ...but they are not a player in-game...
+	    		if (!(sender instanceof Player))
+	    		{
+	    			// ...do not let the command be run.
+	    			sender.sendMessage("This command can only be run by a player.");
+	    		}
+	    		
 	    		// ...and if they have the following permission...
 	    		if(p.hasPermission("witherbow.fire"))
 	    		{
-	    			// ...but they are not a player in-game...
-	    			if (!(sender instanceof Player))
-	    			{
-	    				// ...do not let the command be run.
-	    				sender.sendMessage("This command can only be run by a player.");
-	    			}
-	    			
-	    			// ...but if they are a player, remove them to the enabledPlayers list...
+	    			// ...and they are a player, remove them to the enabledPlayers list...
 	    			enabledPlayers.remove(p.getName());
 	    			
 	    			// ...and tell them they are back to normal.
