@@ -1,0 +1,10 @@
+name: WitherBow
+description: WitherBow is a Bukkit plugin designed to let you shoot wither skulls from a bow.
+author: jflory7
+main: com.crystalcraftmc.witherbow.Main
+version: 0.1b
+
+permissions:
+    witherbow.fire:
+        description: Allow a player to shoot wither skulls.
+        default: op
