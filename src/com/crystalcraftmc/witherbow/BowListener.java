@@ -120,5 +120,3 @@ public class BowListener implements Listener, CommandExecutor
 		}
 	}
 }
-
-// Git test.
