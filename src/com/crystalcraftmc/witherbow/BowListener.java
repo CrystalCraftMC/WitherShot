@@ -42,35 +42,43 @@ public class BowListener implements Listener, CommandExecutor
 	    	// ...but if the player types "/witherbow enable"...
 	    	else if(args[0].equalsIgnoreCase("enable"))
 	    	{
-	    		// ...but they are not a player in-game...
-	    		if (!(sender instanceof Player))
-			    {
-	    			// ...do not let the command be run.
-			    	sender.sendMessage("This command can only be run by a player.");
-			    }
+	    		// ...and if they have the following permission...
+	    		if(p.hasPermission("witherbow.fire"))
+	    		{
+	    			// ...but they are not a player in-game...
+	    			if (!(sender instanceof Player))
+			    	{
+	    				// ...do not let the command be run.
+			    		sender.sendMessage("This command can only be run by a player.");
+			    	}
 	    			
-	    		// ...but if they are a player, add them to the enabledPlayers list...
-	    		enabledPlayers.add(p.getName());
+	    			// ...but if they are a player, add them to the enabledPlayers list...
+	    			enabledPlayers.add(p.getName());
 	    			
-	    		// ...and tell the player that they can now shoot wither skulls!
-	    		p.sendMessage(ChatColor.GREEN + "Your bow has evolved into a WitherBow!");
+	    			// ...and tell the player that they can now shoot wither skulls!
+	    			p.sendMessage(ChatColor.GREEN + "Your bow has evolved into a WitherBow!");
+	    		}
 	    	}
 	    	
 	    	// If the player types "/witherbow disable"...
 	    	else if(args[0].equalsIgnoreCase("disable"))
 	    	{
-	    		// ...but they are not a player in-game...
-	    		if (!(sender instanceof Player))
+	    		// ...and if they have the following permission...
+	    		if(p.hasPermission("witherbow.fire"))
 	    		{
-	    			// ...do not let the command be run.
-	    			sender.sendMessage("This command can only be run by a player.");
+	    			// ...but they are not a player in-game...
+	    			if (!(sender instanceof Player))
+	    			{
+	    				// ...do not let the command be run.
+	    				sender.sendMessage("This command can only be run by a player.");
+	    			}
+	    			
+	    			// ...but if they are a player, remove them to the enabledPlayers list...
+	    			enabledPlayers.remove(p.getName());
+	    			
+	    			// ...and tell them they are back to normal.
+	    			p.sendMessage(ChatColor.RED + "Your bow has returned to its normal state.");
 	    		}
-	    			
-	    		// ...but if they are a player, remove them to the enabledPlayers list...
-	    		enabledPlayers.remove(p.getName());
-	    			
-	    		// ...and tell them they are back to normal.
-	    		p.sendMessage(ChatColor.RED + "Your bow has returned to its normal state.");
 	    	}
 	    		
 	    	// If this has happened, the function will return true. 
@@ -95,10 +103,13 @@ public class BowListener implements Listener, CommandExecutor
 		{
 			Player p = (Player) e.getEntity();
 			
-			if(enabledPlayers.contains(p.getName()));
+			if(p.hasPermission("witherbow.fire"))
 			{
-				e.setCancelled(true);
-				p.launchProjectile(WitherSkull.class).setVelocity(e.getProjectile().getVelocity().multiply(0.5));
+				if(enabledPlayers.contains(p.getName()));
+				{
+					e.setCancelled(true);
+					p.launchProjectile(WitherSkull.class).setVelocity(e.getProjectile().getVelocity().multiply(0.5));
+				}
 			}
 		}
 	}
