@@ -57,6 +57,9 @@ public class BowListener implements Listener, CommandExecutor
 	    			
 	    			// ...and tell the player that they can now shoot wither skulls!
 	    			p.sendMessage(ChatColor.GREEN + "Your bow has evolved into a WitherBow!");
+	    			
+	    			// If this has happened, the function will return true. 
+	    	    	return true;
 	    		}
 	    	}
 	    	
@@ -78,6 +81,9 @@ public class BowListener implements Listener, CommandExecutor
 	    			
 	    			// ...and tell them they are back to normal.
 	    			p.sendMessage(ChatColor.RED + "Your bow has returned to its normal state.");
+	    			
+	    			// If this has happened, the function will return true. 
+	    	    	return true;
 	    		}
 	    	}
 	    		
