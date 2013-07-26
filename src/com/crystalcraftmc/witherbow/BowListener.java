@@ -26,79 +26,53 @@ public class BowListener implements Listener, CommandExecutor
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
 	{
-		// Make the letter 'p' a variable for the command sender (or the player).
 		Player p = (Player) sender;
 		
-		// If the player types "/witherbow [...]"
+		if (!(sender instanceof Player))
+    	{
+    		sender.sendMessage("This command can only be run by a player.");
+    		return true;
+    	}
+		
 		if (cmd.getName().equalsIgnoreCase("witherbow"))
 		{
-			// ...and if the command is ONLY "/witherbow"...
 	    	if(args.length != 1)
 		    {
-		        // ...return the command as incomplete.
+	    		p.sendMessage("You must either enable or disable your WitherBow!");
 		        return false;
 		    }
 	    	
-	    	// ...but if the player types "/witherbow enable"...
 	    	else if(args[0].equalsIgnoreCase("enable"))
 	    	{
-	    		// ...but they are not a player in-game...
-	    		if (!(sender instanceof Player))
-		    	{
-	   				// ...do not let the command be run.
-		    		sender.sendMessage("This command can only be run by a player.");
-		    	}
-	    		
-	    		// ...and if they have the following permission...
 	    		if(p.hasPermission("witherbow.fire"))
 	    		{	    			
-	    			// ...but if they are a player, add them to the enabledPlayers list...
 	    			enabledPlayers.add(p.getName());
-	    			
-	    			// ...and tell the player that they can now shoot wither skulls!
-	    			p.sendMessage(ChatColor.GREEN + "Your bow has evolved into a WitherBow!");
-	    			
-	    			// If this has happened, the function will return true. 
+	    			p.sendMessage(ChatColor.GREEN + "Your bow has evolved into a WitherBow!");	    			
 	    	    	return true;
 	    		}
 	    	}
 	    	
-	    	// If the player types "/witherbow disable"...
 	    	else if(args[0].equalsIgnoreCase("disable"))
 	    	{
-	    		// ...but they are not a player in-game...
 	    		if (!(sender instanceof Player))
 	    		{
-	    			// ...do not let the command be run.
 	    			sender.sendMessage("This command can only be run by a player.");
 	    		}
 	    		
-	    		// ...and if they have the following permission...
 	    		if(p.hasPermission("witherbow.fire"))
 	    		{
-	    			// ...and they are a player, remove them to the enabledPlayers list...
 	    			enabledPlayers.remove(p.getName());
-	    			
-	    			// ...and tell them they are back to normal.
 	    			p.sendMessage(ChatColor.RED + "Your bow has returned to its normal state.");
-	    			
-	    			// If this has happened, the function will return true. 
 	    	    	return true;
 	    		}
 	    	}
-	    		
-	    	// If this has happened, the function will return true. 
 	    	return true;
 	    }
 	    	
-	    // Otherwise, if the sender of the command doesn't have the permission...
 	    else
 		{
-	    	// ...do not let the command be run.
     		p.sendMessage("You do not have permission to use that command.");
 		}
-		
-		// If this hasn't happened, a value of false will be returned.
     	return true;
 	}
 	
