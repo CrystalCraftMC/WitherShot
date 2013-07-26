@@ -99,7 +99,7 @@ public class BowListener implements Listener, CommandExecutor
 		}
 		
 		// If this hasn't happened, a value of false will be returned.
-    	return false;
+    	return true;
 	}
 	
 	@EventHandler
