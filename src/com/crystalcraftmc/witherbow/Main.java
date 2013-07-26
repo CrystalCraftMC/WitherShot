@@ -16,4 +16,3 @@ public final class Main extends JavaPlugin
         // Add a way to clear the the string enabledPlayers?
 	}
 }
-// Test
