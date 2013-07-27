@@ -38,32 +38,27 @@ public class BowListener implements Listener, CommandExecutor
 		{
 	    	if(args.length != 1)
 		    {
-	    		p.sendMessage("You must either enable or disable your WitherBow!");
+	    		p.sendMessage(ChatColor.RED + "You must either enable or disable WitherBow!");
 		        return false;
 		    }
 	    	
 	    	else if(args[0].equalsIgnoreCase("enable"))
 	    	{
 	    		if(p.hasPermission("witherbow.fire"))
-	    		{	    			
+	    		{
 	    			enabledPlayers.add(p.getName());
-	    			p.sendMessage(ChatColor.GREEN + "Your bow has evolved into a WitherBow!");	    			
-	    	    	return true;
+	    			p.sendMessage(ChatColor.GREEN + "You are now the master of the WitherBow!");	    			
+	    			return true;
 	    		}
 	    	}
 	    	
 	    	else if(args[0].equalsIgnoreCase("disable"))
 	    	{
-	    		if (!(sender instanceof Player))
-	    		{
-	    			sender.sendMessage("This command can only be run by a player.");
-	    		}
-	    		
 	    		if(p.hasPermission("witherbow.fire"))
 	    		{
 	    			enabledPlayers.remove(p.getName());
-	    			p.sendMessage(ChatColor.RED + "Your bow has returned to its normal state.");
-	    	    	return true;
+	    			p.sendMessage(ChatColor.GREEN + "You have become a normal archer again.");
+	    			return true;
 	    		}
 	    	}
 	    	return true;
@@ -83,7 +78,7 @@ public class BowListener implements Listener, CommandExecutor
 		{
 			Player p = (Player) e.getEntity();
 			
-			if(enabledPlayers.contains(p.getName()));
+			if(enabledPlayers.contains(p.getName()))
 			{
 				e.setCancelled(true);
 				p.launchProjectile(WitherSkull.class).setVelocity(e.getProjectile().getVelocity().multiply(0.4));

@@ -9,9 +9,9 @@ commands:
         description: Allows/disallows a player to shoot wither skulls.
         usage: /witherbow <enable, disable>
         permission: witherbow.fire
-        permission-message: You do not have permission to use <permission>
-
+        permission-message: You do not have the permission to sue <permission>
+        
 permissions:
     witherbow.fire:
-        description: Allow a player to shoot wither skulls.
+        description: Allows/disallows a player to shoot wither skulls.
         default: op
