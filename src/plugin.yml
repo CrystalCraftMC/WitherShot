@@ -1,18 +1,18 @@
-name: WitherBow
-description: WitherBow is a Bukkit plugin designed to let you shoot wither skulls from a bow.
+name: WitherShot
+description: WitherShot is a Bukkit plugin designed to let you shoot wither skulls from a bow.
 author: jflory7
-website: http://dev.bukkit.org/bukkit-plugins/wither-bow/
-main: com.crystalcraftmc.witherbow.Main
+website: http://dev.bukkit.org/bukkit-plugins/withershot/
+main: com.crystalcraftmc.withershot.Main
 version: 0.1b
 
 commands:
-    witherbow:
+    withershot:
         description: Allows/disallows a player to shoot wither skulls.
-        usage: /witherbow <enable, disable>
-        permission: witherbow.fire
-        permission-message: You do not have the permission to sue <permission>
+        usage: /withershot <enable, disable>
+        permission: withershot.fire
+        permission-message: You do not have the permission to use <permission>
         
 permissions:
-    witherbow.fire:
+    withershot.fire:
         description: Allows/disallows a player to shoot wither skulls.
         default: op

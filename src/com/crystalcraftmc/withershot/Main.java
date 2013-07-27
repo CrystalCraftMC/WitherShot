@@ -1,4 +1,4 @@
-package com.crystalcraftmc.witherbow;
+package com.crystalcraftmc.withershot;
 
 import java.io.IOException;
 
@@ -19,12 +19,12 @@ public final class Main extends JavaPlugin
         if (this.getConfig().getBoolean("auto-update"))
         {
         	@SuppressWarnings("unused")
-			Updater updater = new Updater(this, "wither-bow", this.getFile(), Updater.UpdateType.DEFAULT, true);
+			Updater updater = new Updater(this, "withershot", this.getFile(), Updater.UpdateType.DEFAULT, true);
         }
 		
 		BowListener bl = new BowListener(this);
 		
-        getCommand("witherbow").setExecutor(bl);
+        getCommand("withershot").setExecutor(bl);
         
         getServer().getPluginManager().registerEvents(bl, this);
 	}

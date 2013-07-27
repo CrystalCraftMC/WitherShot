@@ -1,4 +1,4 @@
-package com.crystalcraftmc.witherbow;
+package com.crystalcraftmc.withershot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,27 +34,27 @@ public class BowListener implements Listener, CommandExecutor
     		return true;
     	}
 		
-		if (cmd.getName().equalsIgnoreCase("witherbow"))
+		if (cmd.getName().equalsIgnoreCase("withershot"))
 		{
 	    	if(args.length != 1)
 		    {
-	    		p.sendMessage(ChatColor.RED + "You must either enable or disable WitherBow!");
+	    		p.sendMessage(ChatColor.RED + "You must either enable or disable WitherShot!");
 		        return false;
 		    }
 	    	
 	    	else if(args[0].equalsIgnoreCase("enable"))
 	    	{
-	    		if(p.hasPermission("witherbow.fire"))
+	    		if(p.hasPermission("withershot.fire"))
 	    		{
 	    			enabledPlayers.add(p.getName());
-	    			p.sendMessage(ChatColor.GREEN + "You are now the master of the WitherBow!");	    			
+	    			p.sendMessage(ChatColor.GREEN + "You are now the master of the wither bow!");
 	    			return true;
 	    		}
 	    	}
 	    	
 	    	else if(args[0].equalsIgnoreCase("disable"))
 	    	{
-	    		if(p.hasPermission("witherbow.fire"))
+	    		if(p.hasPermission("withershot.fire"))
 	    		{
 	    			enabledPlayers.remove(p.getName());
 	    			p.sendMessage(ChatColor.GREEN + "You have become a normal archer again.");
