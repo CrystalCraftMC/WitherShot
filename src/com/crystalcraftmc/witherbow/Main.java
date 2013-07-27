@@ -7,7 +7,11 @@ public final class Main extends JavaPlugin
 	@Override
 	public void onEnable()
 	{
-		getServer().getPluginManager().registerEvents(new BowListener(this), this);
+		BowListener bl = new BowListener(this);
+		
+        getCommand("witherbow").setExecutor(bl);
+        
+        getServer().getPluginManager().registerEvents(bl, this);
 	}
 	
 	@Override

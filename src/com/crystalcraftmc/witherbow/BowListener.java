@@ -39,7 +39,7 @@ public class BowListener implements Listener, CommandExecutor
 	    	if(args.length != 1)
 		    {
 	    		p.sendMessage("You must either enable or disable your WitherBow!");
-		        return true;
+		        return false;
 		    }
 	    	
 	    	else if(args[0].equalsIgnoreCase("enable"))
