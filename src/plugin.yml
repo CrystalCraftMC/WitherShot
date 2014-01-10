@@ -3,7 +3,7 @@ description: WitherShot is a Bukkit plugin designed to let you shoot wither skul
 author: jflory7
 website: http://dev.bukkit.org/bukkit-plugins/withershot/
 main: com.crystalcraftmc.withershot.Main
-version: 0.1b
+version: 0.1.1a
 
 commands:
     withershot:

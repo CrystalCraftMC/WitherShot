@@ -19,7 +19,7 @@ public final class Main extends JavaPlugin
         if (this.getConfig().getBoolean("auto-update"))
         {
         	@SuppressWarnings("unused")
-			Updater updater = new Updater(this, "withershot", this.getFile(), Updater.UpdateType.DEFAULT, true);
+        	Updater updater = new Updater(this, 62530, this.getFile(), Updater.UpdateType.DEFAULT, true);
         }
 		
 		BowListener bl = new BowListener(this);
