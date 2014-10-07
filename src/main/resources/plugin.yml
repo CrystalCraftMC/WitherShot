@@ -7,12 +7,15 @@ version: 0.2
 
 commands:
     withershot:
-        description: Allows/disallows a player to shoot wither skulls.
-        usage: /withershot <enable, disable>
+        description: Allows / disallows a player to shoot wither skulls
+        usage: /withershot <enable, disable, reset>
         permission: withershot.fire
         permission-message: You do not have the permission to use <permission>
         
 permissions:
     withershot.fire:
-        description: Allows/disallows a player to shoot wither skulls.
+        description: Allows / disallows a player to shoot wither skulls
+        default: op
+    withershot.reset:
+        description: Resets the players who have WitherShot enabled
         default: op
