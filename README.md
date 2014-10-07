@@ -1,4 +1,4 @@
-WitherBow
+WitherShot
 =========
 
 What is it?
