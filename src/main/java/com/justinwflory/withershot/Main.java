@@ -31,6 +31,10 @@ import java.io.IOException;
 public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
+        saveDefaultConfig();
+        getConfig().options().copyDefaults(true);
+        saveConfig();
+
         // Submit plugin statistics
         try {
             Metrics metrics = new Metrics(this);
