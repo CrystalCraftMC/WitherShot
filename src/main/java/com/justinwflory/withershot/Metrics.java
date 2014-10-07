@@ -3,11 +3,23 @@
  *
  * Copyright (c) 2014 Justin W. Flory
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 package com.justinwflory.withershot;
 
@@ -18,23 +30,10 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.zip.GZIPOutputStream;
 
@@ -125,6 +124,121 @@ public class Metrics {
         // Load the guid then
         guid = configuration.getString("guid");
         debug = configuration.getBoolean("debug", false);
+    }
+
+    /**
+     * GZip compress a string of bytes
+     *
+     * @param input
+     * @return
+     */
+    public static byte[] gzip(String input) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        GZIPOutputStream gzos = null;
+
+        try {
+            gzos = new GZIPOutputStream(baos);
+            gzos.write(input.getBytes("UTF-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (gzos != null) try {
+                gzos.close();
+            } catch (IOException ignore) {
+            }
+        }
+
+        return baos.toByteArray();
+    }
+
+    /**
+     * Appends a json encoded key/value pair to the given string builder.
+     *
+     * @param json
+     * @param key
+     * @param value
+     * @throws UnsupportedEncodingException
+     */
+    private static void appendJSONPair(StringBuilder json, String key, String value) throws UnsupportedEncodingException {
+        boolean isValueNumeric = false;
+
+        try {
+            if (value.equals("0") || !value.endsWith("0")) {
+                Double.parseDouble(value);
+                isValueNumeric = true;
+            }
+        } catch (NumberFormatException e) {
+            isValueNumeric = false;
+        }
+
+        if (json.charAt(json.length() - 1) != '{') {
+            json.append(',');
+        }
+
+        json.append(escapeJSON(key));
+        json.append(':');
+
+        if (isValueNumeric) {
+            json.append(value);
+        } else {
+            json.append(escapeJSON(value));
+        }
+    }
+
+    /**
+     * Escape a string to create a valid JSON string
+     *
+     * @param text
+     * @return
+     */
+    private static String escapeJSON(String text) {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append('"');
+        for (int index = 0; index < text.length(); index++) {
+            char chr = text.charAt(index);
+
+            switch (chr) {
+                case '"':
+                case '\\':
+                    builder.append('\\');
+                    builder.append(chr);
+                    break;
+                case '\b':
+                    builder.append("\\b");
+                    break;
+                case '\t':
+                    builder.append("\\t");
+                    break;
+                case '\n':
+                    builder.append("\\n");
+                    break;
+                case '\r':
+                    builder.append("\\r");
+                    break;
+                default:
+                    if (chr < ' ') {
+                        String t = "000" + Integer.toHexString(chr);
+                        builder.append("\\u" + t.substring(t.length() - 4));
+                    } else {
+                        builder.append(chr);
+                    }
+                    break;
+            }
+        }
+        builder.append('"');
+
+        return builder.toString();
+    }
+
+    /**
+     * Encode text as UTF-8
+     *
+     * @param text the text to encode
+     * @return the encoded text, as UTF-8
+     */
+    private static String urlEncode(final String text) throws UnsupportedEncodingException {
+        return URLEncoder.encode(text, "UTF-8");
     }
 
     /**
@@ -469,31 +583,6 @@ public class Metrics {
     }
 
     /**
-     * GZip compress a string of bytes
-     *
-     * @param input
-     * @return
-     */
-    public static byte[] gzip(String input) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        GZIPOutputStream gzos = null;
-
-        try {
-            gzos = new GZIPOutputStream(baos);
-            gzos.write(input.getBytes("UTF-8"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (gzos != null) try {
-                gzos.close();
-            } catch (IOException ignore) {
-            }
-        }
-
-        return baos.toByteArray();
-    }
-
-    /**
      * Check if mineshafter is present. If it is, we need to bypass it to send POST requests
      *
      * @return true if mineshafter is installed on the server
@@ -505,96 +594,6 @@ public class Metrics {
         } catch (Exception e) {
             return false;
         }
-    }
-
-    /**
-     * Appends a json encoded key/value pair to the given string builder.
-     *
-     * @param json
-     * @param key
-     * @param value
-     * @throws UnsupportedEncodingException
-     */
-    private static void appendJSONPair(StringBuilder json, String key, String value) throws UnsupportedEncodingException {
-        boolean isValueNumeric = false;
-
-        try {
-            if (value.equals("0") || !value.endsWith("0")) {
-                Double.parseDouble(value);
-                isValueNumeric = true;
-            }
-        } catch (NumberFormatException e) {
-            isValueNumeric = false;
-        }
-
-        if (json.charAt(json.length() - 1) != '{') {
-            json.append(',');
-        }
-
-        json.append(escapeJSON(key));
-        json.append(':');
-
-        if (isValueNumeric) {
-            json.append(value);
-        } else {
-            json.append(escapeJSON(value));
-        }
-    }
-
-    /**
-     * Escape a string to create a valid JSON string
-     *
-     * @param text
-     * @return
-     */
-    private static String escapeJSON(String text) {
-        StringBuilder builder = new StringBuilder();
-
-        builder.append('"');
-        for (int index = 0; index < text.length(); index++) {
-            char chr = text.charAt(index);
-
-            switch (chr) {
-                case '"':
-                case '\\':
-                    builder.append('\\');
-                    builder.append(chr);
-                    break;
-                case '\b':
-                    builder.append("\\b");
-                    break;
-                case '\t':
-                    builder.append("\\t");
-                    break;
-                case '\n':
-                    builder.append("\\n");
-                    break;
-                case '\r':
-                    builder.append("\\r");
-                    break;
-                default:
-                    if (chr < ' ') {
-                        String t = "000" + Integer.toHexString(chr);
-                        builder.append("\\u" + t.substring(t.length() - 4));
-                    } else {
-                        builder.append(chr);
-                    }
-                    break;
-            }
-        }
-        builder.append('"');
-
-        return builder.toString();
-    }
-
-    /**
-     * Encode text as UTF-8
-     *
-     * @param text the text to encode
-     * @return the encoded text, as UTF-8
-     */
-    private static String urlEncode(final String text) throws UnsupportedEncodingException {
-        return URLEncoder.encode(text, "UTF-8");
     }
 
     /**
