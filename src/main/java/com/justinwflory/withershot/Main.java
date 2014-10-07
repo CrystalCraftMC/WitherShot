@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package com.justinwflory.withershot;
 
 import org.bukkit.plugin.java.JavaPlugin;
@@ -43,8 +44,6 @@ public final class Main extends JavaPlugin {
             Updater updater = new Updater(this, 62530, this.getFile(), Updater.UpdateType.DEFAULT, true);
         }
 
-        BowListener bl = new BowListener(this);
-
         getCommand("withershot").setExecutor(bl);
 
         getServer().getPluginManager().registerEvents(bl, this);
@@ -52,6 +51,9 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Add a way to clear the the string enabledPlayers?
+        bl.enabledPlayers.clear();
+        getLogger().info("WitherShot has been reset!");
     }
+
+    private BowListener bl = new BowListener(this);
 }
