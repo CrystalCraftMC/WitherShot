@@ -2,8 +2,8 @@ name: WitherShot
 description: WitherShot is a Bukkit plugin designed to let you shoot wither skulls from a bow.
 author: jflory7
 website: http://dev.bukkit.org/bukkit-plugins/withershot/
-main: com.crystalcraftmc.withershot.Main
-version: 0.1.1a
+main: com.justinwflory.withershot.Main
+version: 0.2
 
 commands:
     withershot:
