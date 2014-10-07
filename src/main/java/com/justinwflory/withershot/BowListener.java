@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package com.justinwflory.withershot;
 
 import org.bukkit.ChatColor;
@@ -46,27 +47,34 @@ public class BowListener implements Listener, CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        Player p = (Player) sender;
-
         if (!(sender instanceof Player)) {
             sender.sendMessage("This command can only be run by a player.");
             return true;
         }
 
-        if (cmd.getName().equalsIgnoreCase("withershot") && p.hasPermission("withershot.fire")) {
+        Player p = (Player) sender;
+
+        if (cmd.getName().equalsIgnoreCase("withershot")) {
             if (args.length != 1) {
                 p.sendMessage(ChatColor.RED + "You must either enable or disable WitherShot!");
                 return false;
-            } else if (args[0].equalsIgnoreCase("enable")) {
-                enabledPlayers.add(p.getName());
-                p.sendMessage(ChatColor.GREEN + "You are now the master of the wither bow!");
-            } else if (args[0].equalsIgnoreCase("disable")) {
-                enabledPlayers.remove(p.getName());
-                p.sendMessage(ChatColor.GREEN + "You have become a normal archer again.");
+            } else if (p.hasPermission("withershot.fire")) {
+                if (args[0].equalsIgnoreCase("enable")) {
+                    enabledPlayers.add(p.getName());
+                    p.sendMessage(ChatColor.GREEN + "You are now the master of the wither bow!");
+                } else if (args[0].equalsIgnoreCase("disable")) {
+                    enabledPlayers.remove(p.getName());
+                    p.sendMessage(ChatColor.GREEN + "You have become a normal archer again.");
+                }
+            } else if (cmd.getName().equalsIgnoreCase("reset") && p.hasPermission("withershot.clear")) {
+                enabledPlayers.clear();
+                p.sendMessage(ChatColor.GREEN + "The power of the wither has been extinguished... for now.");
+            } else {
+                p.sendMessage("You do not have permission to use that command.");
             }
-            return true;
         } else {
-            p.sendMessage("You do not have permission to use that command.");
+            p.sendMessage(ChatColor.RED + "You entered an invalid command!");
+            return false;
         }
         return true;
     }
