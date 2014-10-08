@@ -54,23 +54,22 @@ public class BowListener implements Listener, CommandExecutor {
 
         Player p = (Player) sender;
 
-        if (cmd.getName().equalsIgnoreCase("withershot")) {
+        if (cmd.getName().equalsIgnoreCase("ws")) {
             if (args.length != 1) {
                 p.sendMessage(ChatColor.RED + "You must either enable or disable WitherShot!");
                 return false;
-            } else if (p.hasPermission("withershot.fire")) {
-                if (args[0].equalsIgnoreCase("enable")) {
-                    enabledPlayers.add(p.getName());
-                    p.sendMessage(ChatColor.GREEN + "You are now the master of the wither bow!");
-                } else if (args[0].equalsIgnoreCase("disable")) {
-                    enabledPlayers.remove(p.getName());
-                    p.sendMessage(ChatColor.GREEN + "You have become a normal archer again.");
-                }
-            } else if (cmd.getName().equalsIgnoreCase("reset") && p.hasPermission("withershot.clear")) {
+            } else if (args[0].equalsIgnoreCase("enable") && p.hasPermission("withershot.fire")) {
+                enabledPlayers.add(p.getName());
+                p.sendMessage(ChatColor.DARK_PURPLE + "You are now the master of the wither bow!");
+            } else if (args[0].equalsIgnoreCase("disable") && p.hasPermission("withershot.fire")) {
+                enabledPlayers.remove(p.getName());
+                p.sendMessage(ChatColor.GREEN + "You have become a normal archer again.");
+            } else if (args[0].equalsIgnoreCase("reset") && p.hasPermission("withershot.reset")) {
                 enabledPlayers.clear();
-                p.sendMessage(ChatColor.GREEN + "The power of the wither has been extinguished... for now.");
+                p.sendMessage(ChatColor.GREEN + "The power of the wither has been extinguished for all.");
             } else {
-                p.sendMessage("You do not have permission to use that command.");
+                p.sendMessage(ChatColor.RED + "You entered an invalid command!");
+                return false;
             }
         } else {
             p.sendMessage(ChatColor.RED + "You entered an invalid command!");
@@ -86,7 +85,7 @@ public class BowListener implements Listener, CommandExecutor {
 
             if (enabledPlayers.contains(p.getName())) {
                 e.setCancelled(true);
-                p.launchProjectile(WitherSkull.class).setVelocity(e.getProjectile().getVelocity().multiply(0.4));
+                p.launchProjectile(WitherSkull.class).setVelocity(e.getProjectile().getVelocity().multiply(0.3));
             }
         }
     }
