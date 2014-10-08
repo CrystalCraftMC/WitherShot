@@ -48,7 +48,7 @@ public final class Main extends JavaPlugin {
             Updater updater = new Updater(this, 62530, this.getFile(), Updater.UpdateType.DEFAULT, true);
         }
 
-        getCommand("withershot").setExecutor(bl);
+        getCommand("ws").setExecutor(bl);
 
         getServer().getPluginManager().registerEvents(bl, this);
     }

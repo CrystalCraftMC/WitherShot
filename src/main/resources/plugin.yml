@@ -6,12 +6,13 @@ main: com.justinwflory.withershot.Main
 version: 0.2
 
 commands:
-    withershot:
+    ws:
         description: Allows / disallows a player to shoot wither skulls
-        usage: /withershot <enable, disable, reset>
+        usage: /ws <enable, disable, reset>
         permission: withershot.fire
         permission-message: You do not have the permission to use <permission>
-        
+        aliases: [witherbow, bow]
+
 permissions:
     withershot.fire:
         description: Allows / disallows a player to shoot wither skulls
