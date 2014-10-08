@@ -11,7 +11,7 @@ commands:
         usage: /ws <enable, disable, reset>
         permission: withershot.fire
         permission-message: You do not have the permission to use <permission>
-        aliases: [witherbow, bow]
+        aliases: [withershot, bow]
 
 permissions:
     withershot.fire:
