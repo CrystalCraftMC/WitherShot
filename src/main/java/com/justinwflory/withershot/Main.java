@@ -18,22 +18,12 @@ package com.justinwflory.withershot;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.IOException;
-
 public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
         getConfig().options().copyDefaults(true);
         saveConfig();
-
-        // Submit plugin statistics
-        try {
-            Metrics metrics = new Metrics(this);
-            metrics.start();
-        } catch (IOException e) {
-            // Failed to submit the stats :-(
-        }
 
         if (this.getConfig().getBoolean("auto-update")) {
             @SuppressWarnings("unused")

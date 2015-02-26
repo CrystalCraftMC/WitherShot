@@ -15,6 +15,7 @@
   ~    See the License for the specific language governing permissions and
   ~    limitations under the License.
   -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -22,7 +23,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.justinwflory.withershot</groupId>
     <artifactId>WitherShot</artifactId>
-    <version>0.2</version>
+    <version>0.2.1</version>
 
     <profiles>
         <profile>
@@ -50,6 +51,32 @@
                             <target>1.7</target>
                         </configuration>
                     </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-shade-plugin</artifactId>
+                        <version>2.3</version>
+                        <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>org.mcstats.*:*</include>
+                                </includes>
+                            </artifactSet>
+                            <relocations>
+                                <relocation>
+                                    <pattern>org.mcstats</pattern>
+                                    <shadedPattern>com.justinwflory.withershot</shadedPattern>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>shade</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -58,6 +85,10 @@
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>Plugin Metrics</id>
+            <url>http://repo.mcstats.org/content/repositories/public</url>
         </repository>
     </repositories>
     <dependencies>
@@ -72,6 +103,12 @@
             <version>1.8-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mcstats.bukkit</groupId>
+            <artifactId>metrics</artifactId>
+            <version>R8-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     
