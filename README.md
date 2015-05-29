@@ -1,4 +1,4 @@
-WitherShot
+WitherShot [![Build Status](https://travis-ci.org/jflory7/WitherShot.svg)](https://travis-ci.org/jflory7/WitherShot)
 =========
 
 What is it?
